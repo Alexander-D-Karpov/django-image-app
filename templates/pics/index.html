@@ -1,0 +1,26 @@
+{% extends "pics/base_pics.html" %}
+
+{% block content %}
+    <div class="row row-cols-1 row-cols-md-5 g-2 m-2 d-flex">
+        {% for group in groups %}
+        <a style="text-decoration: none; color: black" href="{{ group.get_absolute_url }}">
+            <div class="col text-center">
+                <div class="card border-0">
+                    <p><i class="bi bi-folder display-2"></i></p>
+                    <p>{{ group.name }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    <!--
+        <div class="col">
+            <div class="card border-0">
+                <p class="row">
+                    <input class="form-control-lg">
+                    <button class="btn"><i class="bi bi-plus-circle display-2"></i></button>
+                </p>
+            </div>
+        </div>
+        -->
+    </div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "pics/base_pics.html" %}
+{% load static %}
+
+{% block extra_head %}
+    <script src="{% static "lazysizes.min.js" %}" async=""></script>
+    <style>
+    @media (min-width: 1900px)  {
+        .img {
+              transition: 100ms;
+              object-fit: cover;
+              width:300px;
+              height:300px;
+        }
+        .img:hover {
+              transition: 100ms;
+              transform: scale(1.2);
+        }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1899px)  {
+        .img {
+              transition: 100ms;
+              object-fit: cover;
+              width:225px;
+              height:225px;
+        }
+        .img:hover {
+              transition: 100ms;
+              transform: scale(1.2);
+        }
+    }
+
+    /* Landscape tablets and medium desktops */
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .img {
+              transition: 100ms;
+              object-fit: cover;
+              width:175px;
+              height:175px;
+        }
+        .img:hover {
+              transition: 100ms;
+              transform: scale(1.2);
+        }
+    }
+
+    /* Portrait tablets and small desktops */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .img {
+              transition: 100ms;
+              object-fit: cover;
+              width:125px;
+              height:125px;
+        }
+        .img:hover {
+              transition: 100ms;
+              transform: scale(1.2);
+        }
+    }
+
+    /* Landscape phones and portrait tablets */
+    @media (max-width: 767px) {
+        .img {
+              transition: 100ms;
+              object-fit: cover;
+              width:275px;
+              height:275px;
+        }
+        .img:hover {
+              transition: 100ms;
+              transform: scale(1.2);
+        }
+    }
+
+    /* Portrait phones and smaller */
+    @media (max-width: 480px) {
+        .img {
+              transition: 100ms;
+              object-fit: cover;
+              width:250px;
+              height:250px;
+        }
+        .img:hover {
+              transition: 100ms;
+              transform: scale(1.2);
+        }
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_superuser %}
+    <div class="m-3 mb-2 center-block text-center">
+        <form action="{% url "image_upload" %}" class="was-validated" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file" class="form-label">Your image:</label>
+            <input name="group" type="hidden" value="{{ group.slug }}">
+            <input type="file" class="form-control" id="file" name="images" accept="image/*" multiple required>
+            <button type="submit" class="btn mt-2 btn-success">upload</button>
+        </form>
+    </div>
+    {% endif %}
+        <div class="row row-cols-1 row-cols-md-4 g-4 m-2 d-flex">
+            {% for image in group.get_images %}
+            <div class="image-grid-container">
+                <a href="{{ image.get_absolute_url }}">
+                    <img class="img m-2 lazyload" data-src="{{ image.image.url }}" alt="">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "pics/base_pics.html" %}
+
+{% block content %}
+{% if message %}
+    {% autoescape off %}
+        {{ message }}
+    {% endautoescape %}
+{% endif %}
+<div class="m-3 mb-2 center-block text-center">
+    <form class="was-validated" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file" class="form-label">Your image:</label>
+        <input type="file" class="form-control" id="file" name="images" accept="image/*" multiple="" required>
+        <button type="submit" class="btn mt-2 btn-success">upload</button>
+    </form>
+</div>
+{% endblock %}
